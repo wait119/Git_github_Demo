@@ -14,5 +14,9 @@ class MainActivity : AppCompatActivity() {
             number++
             textView.text = "$number"
         }
+        sub.setOnClickListener {
+            number--
+            textView.text = "$number"
+        }
     }
 }

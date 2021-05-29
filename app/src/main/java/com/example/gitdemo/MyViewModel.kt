@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 class MyViewModel : ViewModel() {
     private val _number = MutableLiveData(0)
     val numberlivedata: LiveData<Int> = _number
-    var number = 0
 
     fun add(n: Int) {
         _number.value = _number.value?.plus(n)

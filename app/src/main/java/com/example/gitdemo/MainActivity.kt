@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -14,14 +15,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         myViewModel = ViewModelProvider(this).get(MyViewModel::class.java)
 
-        textView.text = "${myViewModel.number}"
+        myViewModel.numberlivedata.observe(this, Observer { textView.text = "$it" })
         add.setOnClickListener {
-            myViewModel.number++
-            textView.text = "${myViewModel.number}"
+            myViewModel.add(1)
         }
         sub.setOnClickListener {
-            myViewModel.number--
-            textView.text = "${myViewModel.number}"
+            myViewModel.add(-1)
         }
     }
 
@@ -32,8 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.reset) {
-            myViewModel.number = 0
-            textView.text = "${myViewModel.number}"
+            myViewModel.reset()
         }
         return super.onOptionsItemSelected(item)
     }

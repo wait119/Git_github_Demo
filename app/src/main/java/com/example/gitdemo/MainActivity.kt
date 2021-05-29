@@ -4,22 +4,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    private var number = 0
+    private lateinit var myViewModel: MyViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        number = savedInstanceState?.getInt("number") ?: 0
         setContentView(R.layout.activity_main)
-        textView.text = "$number"
+        myViewModel = ViewModelProvider(this).get(MyViewModel::class.java)
+
+        textView.text = "${myViewModel.number}"
         add.setOnClickListener {
-            number++
-            textView.text = "$number"
+            myViewModel.number++
+            textView.text = "${myViewModel.number}"
         }
         sub.setOnClickListener {
-            number--
-            textView.text = "$number"
+            myViewModel.number--
+            textView.text = "${myViewModel.number}"
         }
     }
 
@@ -28,15 +30,10 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt("number", number)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.reset) {
-            number = 0
-            textView.text = "$number"
+            myViewModel.number = 0
+            textView.text = "${myViewModel.number}"
         }
         return super.onOptionsItemSelected(item)
     }

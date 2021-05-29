@@ -9,8 +9,9 @@ class MainActivity : AppCompatActivity() {
     private var number = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        number = savedInstanceState?.getInt("number") ?: 0
         setContentView(R.layout.activity_main)
-        textView.text = "0"
+        textView.text = "$number"
         add.setOnClickListener {
             number++
             textView.text = "$number"
@@ -24,5 +25,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("number", number)
     }
 }
